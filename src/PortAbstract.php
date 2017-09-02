@@ -53,6 +53,13 @@ abstract class PortAbstract
 	protected $amount;
 
 	/**
+	 * Payment Type
+	 *
+	 * @var string
+	 */
+	 protected $type;
+
+	/**
 	 * callback URL
 	 *
 	 * @var url
@@ -179,6 +186,24 @@ abstract class PortAbstract
 	}
 
 	/**
+	 * Sets type
+	 * @param $type
+	 * @return mixed
+	 */
+	 function type($type)
+	 {
+		 return $this->set($type);
+	 }
+
+	/**
+	 * get type
+	 */
+	 function getType()
+	 {
+		 return $this->type;
+	 }
+
+	/**
 	 * Return result of payment
 	 * If result is done, return true, otherwise throws an related exception
 	 *
@@ -215,18 +240,17 @@ abstract class PortAbstract
 	protected function newTransaction()
 	{
 		$uid = $this->getTimeId();
-
 		$this->transactionId = $this->getTable()->insert([
-			'id' => $uid,
+			'id'      => $uid,
 			'user_id' => request()->user()->id,
-			'port' => $this->getPortName(),
-			'price' => $this->amount,
-			'status' => Enum::TRANSACTION_INIT,
-			'ip' => Request::getClientIp(),
+			'port'    => $this->getPortName(),
+			'price'   => $this->amount,
+			'type'    => $this->type,
+			'status'  => Enum::TRANSACTION_INIT,
+			'ip'      => Request::getClientIp(),
 			'created_at' => Carbon::now(),
 			'updated_at' => Carbon::now(),
 		]) ? $uid : null;
-
 		return $this->transactionId;
 	}
 

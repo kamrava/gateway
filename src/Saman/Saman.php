@@ -29,6 +29,16 @@ class Saman extends PortAbstract implements PortInterface
     /**
      * {@inheritdoc}
      */
+     public function type($type)
+     {
+         $this->type = $type;
+ 
+         return $this;
+     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function ready()
     {
         $this->newTransaction();
