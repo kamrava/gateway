@@ -218,6 +218,7 @@ abstract class PortAbstract
 
 		$this->transactionId = $this->getTable()->insert([
 			'id' => $uid,
+			'user_id' => request()->user()->id,
 			'port' => $this->getPortName(),
 			'price' => $this->amount,
 			'status' => Enum::TRANSACTION_INIT,
