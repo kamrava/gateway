@@ -308,7 +308,7 @@ abstract class PortAbstract
 	protected function newLog($statusCode, $statusMessage)
 	{
 		return $this->getLogTable()->insert([
-			'transaction_id' => $this->transactionId,
+			'payment_id' => $this->transactionId,
 			'result_code' => $statusCode,
 			'result_message' => $statusMessage,
 			'log_date' => Carbon::now(),

@@ -15,15 +15,6 @@ interface PortInterface
     public function set($amount);
 
     /**
-     * This method use for set payment type.
-     *
-     * @param string $type
-     *
-     * @return $this
-     */
-     public function type($type);
-
-    /**
      * This method use for done everything that necessary before redirect to port.
      *
      * @return $this
