@@ -218,6 +218,7 @@ abstract class PortAbstract
 		$this->transaction = $transaction;
 		$this->transactionId = $transaction->id;
 		$this->amount = intval($transaction->price);
+		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
 	}
 
