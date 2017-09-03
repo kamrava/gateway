@@ -129,13 +129,13 @@ class Pasargad extends PortAbstract implements PortInterface
         $fields = array('invoiceUID' => Input::get('tref'));
         $result = Parser::post2https($fields,'https://pep.shaparak.ir/CheckTransactionResult.aspx');
         $check_array = Parser::makeXMLTree($result);
-        if ($check_array['resultObj']['result'] == "True") {
+        if ($check_array['result'] == "True") {
             $fields = array(
                 'MerchantCode' => $this->config->get('gateway.pasargad.merchantId'),
                 'TerminalCode' => $this->config->get('gateway.pasargad.terminalId'),
-                'InvoiceNumber' => $check_array['resultObj']['invoiceNumber'],
+                'InvoiceNumber' => $check_array['invoiceNumber'],
                 'InvoiceDate' => Input::get('iD'),
-                'amount' => $check_array['resultObj']['amount'],
+                'amount' => $check_array['amount'],
                 'TimeStamp' => date("Y/m/d H:i:s"),
                 'sign' => '',
                 );
@@ -151,7 +151,7 @@ class Pasargad extends PortAbstract implements PortInterface
                 $this->transactionFailed();
                 throw new PasargadErrorException(Enum::TRANSACTION_FAILED_TEXT, -1);
             }
-            $this->refId = $check_array['resultObj']['referenceNumber'];
+            $this->refId = $check_array['referenceNumber'];
             $this->transactionSetRefId();
             $this->trackingCode = Input::get('tref');
             $this->transactionSucceed();
@@ -161,4 +161,5 @@ class Pasargad extends PortAbstract implements PortInterface
             $this->transactionFailed();
             throw new PasargadErrorException(Enum::TRANSACTION_FAILED_TEXT, -1);
         }
+	}
 }

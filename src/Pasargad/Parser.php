@@ -45,7 +45,7 @@ class Parser
             }
         }
 
-        return $ret['resultObj'];
+        return isset($ret['resultObj']) ? $ret['resultObj'] : $ret;
     }
 
 
