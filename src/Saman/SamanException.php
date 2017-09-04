@@ -9,7 +9,7 @@ class SamanException extends BankException
 
     public static $errors = array(
         "OK" => "پرداخت با موفقیت انجام شد",
-        'Canceled By User' => 'تراکنش توسط خریدار کنسل شد',
+        'Canceled By User' => 'تراکنش توسط کاربر کنسل شد',
         'Invalid Amount' => 'مبلغ سند برگشتی از مبلغ تراکنش اصلی بیشتر است',
         'Invalid Transaction' => 'درخواست برگشت تراکنش رسیده است در حالی که تراکنش اصلی پیدا نمی شود',
         'Invalid Card Number' => 'شماره کارت اشتباه است',
