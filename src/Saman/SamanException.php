@@ -50,6 +50,6 @@ class SamanException extends BankException
     {
         $this->errorRef = $errorRef;
 
-        parent::__construct(@self::$errors[$this->errorRef].' ('.$this->errorRef.')', intval($this->errorRef));
+        parent::__construct(@self::$errors[$this->errorRef], intval($this->errorRef));
     }
 }
