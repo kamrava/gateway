@@ -34,6 +34,16 @@ class Sadad extends PortAbstract implements PortInterface
 	}
 
 	/**
+     * {@inheritdoc}
+     */
+     public function type($type)
+     {
+         $this->type = $type;
+ 
+         return $this;
+     }
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function ready()
