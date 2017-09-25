@@ -174,7 +174,7 @@ abstract class PortAbstract
 	 */
 	function price($price)
 	{
-		return $this->set($price);
+		return $this->set($price * 10);
 	}
 
 	/**
@@ -182,7 +182,7 @@ abstract class PortAbstract
 	 */
 	function getPrice()
 	{
-		return $this->amount;
+		return $this->amount / 10;
 	}
 
 	/**
@@ -217,7 +217,7 @@ abstract class PortAbstract
 	{
 		$this->transaction = $transaction;
 		$this->transactionId = $transaction->id;
-		$this->amount = intval($transaction->price);
+		$this->amount = intval($transaction->price * 10);
 		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
 	}
@@ -245,10 +245,10 @@ abstract class PortAbstract
 			'id'      => $uid,
 			'user_id' => request()->user()->id,
 			'port'    => $this->getPortName(),
-			'price'   => $this->amount,
+			'price'   => $this->amount / 10,
 			'type'    => $this->type,
 			'status'  => Enum::TRANSACTION_INIT,
-			'ip'      => Request::getClientIp(),
+			'ip'      => request()->getClientIp(),
 			'created_at' => Carbon::now(),
 			'updated_at' => Carbon::now(),
 		]) ? $uid : null;
