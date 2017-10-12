@@ -245,6 +245,7 @@ abstract class PortAbstract
 		$this->amount = intval($transaction->price * 10);
 		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
+		$this->request_id = $transaction->request_id;
 	}
 
 	function getTimeId()
