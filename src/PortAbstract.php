@@ -59,6 +59,13 @@ abstract class PortAbstract
 	 */
 	 protected $type;
 
+    /**
+     * Payment request_id
+     *
+     * @var string
+     */
+    protected $request_id;
+
 	/**
 	 * callback URL
 	 *
@@ -203,6 +210,24 @@ abstract class PortAbstract
 		 return $this->type;
 	 }
 
+    /**
+     * Sets request_id
+     * @param $request_id
+     * @return mixed
+     */
+    function setRequestId($request_id)
+    {
+        return $this->set($request_id);
+    }
+
+    /**
+     * get type
+     */
+    function getRequestId()
+    {
+        return $this->request_id;
+    }
+
 	/**
 	 * Return result of payment
 	 * If result is done, return true, otherwise throws an related exception
@@ -244,6 +269,7 @@ abstract class PortAbstract
 		$this->transactionId = $this->getTable()->insert([
 			'id'      => $uid,
 			'user_id' => request()->user()->id,
+			'request_id' => $this->request_id,
 			'port'    => $this->getPortName(),
 			'price'   => $this->amount / 10,
 			'type'    => $this->type,
@@ -353,3 +379,4 @@ abstract class PortAbstract
 		$url_array['path'] . '?' . http_build_query($query_array);
 	}
 }
+

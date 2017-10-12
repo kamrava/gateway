@@ -47,6 +47,16 @@ class Pasargad extends PortAbstract implements PortInterface
          return $this;
      }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function setRequestId($request_id)
+    {
+        $this->request_id = $request_id;
+
+        return $this;
+    }
+
 	/**
 	 * {@inheritdoc}
 	 */

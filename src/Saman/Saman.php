@@ -39,6 +39,16 @@ class Saman extends PortAbstract implements PortInterface
     /**
      * {@inheritdoc}
      */
+    public function setRequestId($request_id)
+    {
+        $this->request_id = $request_id;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function ready()
     {
         $this->newTransaction();
