@@ -39,7 +39,7 @@ class Sadad extends PortAbstract implements PortInterface
      public function type($type)
      {
          $this->type = $type;
- 
+
          return $this;
      }
 
@@ -52,6 +52,26 @@ class Sadad extends PortAbstract implements PortInterface
 
         return $this;
     }
+
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setPaymentableId($paymentable_id)
+		{
+				$this->paymentable_id = $paymentable_id;
+
+				return $this;
+		}
+
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setPaymentableType($paymentable_type)
+		{
+				$this->paymentable_type = $paymentable_type;
+
+				return $this;
+		}
 
 	/**
 	 * {@inheritdoc}
@@ -221,4 +241,3 @@ class Sadad extends PortAbstract implements PortInterface
 		return $result;
 	}
 }
-

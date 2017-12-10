@@ -66,6 +66,20 @@ abstract class PortAbstract
      */
     protected $request_id;
 
+		/**
+     * Payment paymentable_id
+     *
+     * @var string
+     */
+    protected $paymentable_id;
+
+		/**
+     * Payment paymentable_type
+     *
+     * @var string
+     */
+    protected $paymentable_type;
+
 	/**
 	 * callback URL
 	 *
@@ -105,7 +119,7 @@ abstract class PortAbstract
 	/**
 	 * @return mixed
 	 */
-	function getTable() 
+	function getTable()
 	{
 		return $this->db->table($this->config->get('gateway.table'));
 	}
@@ -228,6 +242,42 @@ abstract class PortAbstract
         return $this->request_id;
     }
 
+		/**
+		 * Sets paymentable_id
+		 * @param $paymentable_id
+		 * @return mixed
+		 */
+		function setPaymentableId($paymentable_id)
+    {
+        return $this->set($paymentable_id);
+    }
+
+    /**
+     * get paymentable_id
+     */
+    function getPaymentableId()
+    {
+        return $this->$paymentable_id;
+    }
+
+		/**
+		 * Sets paymentable_type
+		 * @param $paymentable_type
+		 * @return mixed
+		 */
+		function setPaymentableType($paymentable_type)
+    {
+        return $this->set($paymentable_type);
+    }
+
+    /**
+     * get paymentable_type
+     */
+    function getPaymentableType()
+    {
+        return $this->$paymentable_type;
+    }
+
 	/**
 	 * Return result of payment
 	 * If result is done, return true, otherwise throws an related exception
@@ -246,6 +296,8 @@ abstract class PortAbstract
 		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
 		$this->request_id = $transaction->request_id;
+		$this->paymentable_id = $transaction->paymentable_id;
+		$this->paymentable_type = $transaction->paymentable_type;
 	}
 
 	function getTimeId()
@@ -271,6 +323,8 @@ abstract class PortAbstract
 			'id'      => $uid,
 			'user_id' => request()->user()->id,
 			'request_id' => $this->request_id,
+			'paymentable_id' => $this->paymentable_id,
+			'paymentable_type' => $this->paymentable_type,
 			'port'    => $this->getPortName(),
 			'price'   => $this->amount / 10,
 			'type'    => $this->type,
@@ -380,4 +434,3 @@ abstract class PortAbstract
 		$url_array['path'] . '?' . http_build_query($query_array);
 	}
 }
-
