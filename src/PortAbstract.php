@@ -242,12 +242,12 @@ abstract class PortAbstract
         return $this->request_id;
     }
 
-		/**
-		 * Sets paymentable_id
-		 * @param $paymentable_id
-		 * @return mixed
-		 */
-		function setPaymentableId($paymentable_id)
+	/**
+	 * Sets paymentable_id
+	 * @param $paymentable_id
+	 * @return mixed
+	 */
+	function setPaymentableId($paymentable_id)
     {
         return $this->set($paymentable_id);
     }
@@ -257,15 +257,15 @@ abstract class PortAbstract
      */
     function getPaymentableId()
     {
-        return $this->$paymentable_id;
+        return $this->paymentable_id;
     }
 
-		/**
-		 * Sets paymentable_type
-		 * @param $paymentable_type
-		 * @return mixed
-		 */
-		function setPaymentableType($paymentable_type)
+	/**
+	 * Sets paymentable_type
+	 * @param $paymentable_type
+	 * @return mixed
+	 */
+	function setPaymentableType($paymentable_type)
     {
         return $this->set($paymentable_type);
     }
@@ -275,7 +275,7 @@ abstract class PortAbstract
      */
     function getPaymentableType()
     {
-        return $this->$paymentable_type;
+        return $this->paymentable_type;
     }
 
 	/**
