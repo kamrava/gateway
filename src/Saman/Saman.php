@@ -19,6 +19,16 @@ class Saman extends PortAbstract implements PortInterface
     /**
      * {@inheritdoc}
      */
+    public function setCurrencyToToman()
+    {
+        $this->is_toman = true;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function set($amount)
     {
         $this->amount = $amount;

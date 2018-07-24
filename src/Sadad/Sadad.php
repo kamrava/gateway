@@ -22,7 +22,16 @@ class Sadad extends PortAbstract implements PortInterface
 	 */
 	private $form = '';
 
+	/**
+     * {@inheritdoc}
+     */
+    public function setCurrencyToToman()
+    {
+        $this->is_toman = true;
 
+        return $this;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

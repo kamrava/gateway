@@ -86,15 +86,65 @@ class Zarinpal extends PortAbstract implements PortInterface
 		$this->setServer();
 	}
 
+	 /**
+     * {@inheritdoc}
+     */
+    public function setCurrencyToToman()
+    {
+        $this->is_toman = true;
+
+        return $this;
+    }
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public function set($amount)
 	{
-		$this->amount = ($amount / 10);
+		$this->amount = $amount;
 
 		return $this;
 	}
+
+	/**
+     * {@inheritdoc}
+     */
+	public function type($type)
+	{
+		$this->type = $type;
+
+		return $this;
+	}
+
+	/**
+     * {@inheritdoc}
+     */
+    public function setRequestId($request_id)
+    {
+        $this->request_id = $request_id;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPaymentableId($paymentable_id)
+    {
+        $this->paymentable_id = $paymentable_id;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPaymentableType($paymentable_type)
+    {
+        $this->paymentable_type = $paymentable_type;
+
+        return $this;
+    }
 
 	/**
 	 * {@inheritdoc}

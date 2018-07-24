@@ -46,7 +46,14 @@ abstract class PortAbstract
 	protected $refId;
 
 	/**
-	 * Amount in Rial
+	 * Is Currency Set To Toman?
+	 *
+	 * @var boolean
+	 */
+	protected $is_toman;
+
+	/**
+	 * Amount
 	 *
 	 * @var int
 	 */
@@ -149,6 +156,9 @@ abstract class PortAbstract
 	 */
 	function setPortName($name)
 	{
+		if($name == Enum::ZARINPAL) {
+			$this->is_toman = true;
+		}
 		$this->portName = $name;
 	}
 
@@ -195,7 +205,7 @@ abstract class PortAbstract
 	 */
 	function price($price)
 	{
-		return $this->set($price * 10);
+		return $this->is_toman ? $this->set($price) : $this->set($price * 10);
 	}
 
 	/**
@@ -203,7 +213,7 @@ abstract class PortAbstract
 	 */
 	function getPrice()
 	{
-		return $this->amount / 10;
+		return $this->is_toman ? $this->amount : $this->amount / 10;
 	}
 
 	/**
@@ -290,9 +300,10 @@ abstract class PortAbstract
 	 */
 	function verify($transaction)
 	{
+		$amount = $this->is_toman ? intval($transaction->price) : intval($transaction->price * 10);
 		$this->transaction = $transaction;
 		$this->transactionId = $transaction->id;
-		$this->amount = intval($transaction->price * 10);
+		$this->amount = $amount;
 		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
 		$this->request_id = $transaction->request_id;
@@ -319,6 +330,7 @@ abstract class PortAbstract
 	protected function newTransaction()
 	{
 		$uid = $this->getTimeId();
+		$price = $this->is_toman ? $this->amount : $this->amount / 10; 	
 		$this->transactionId = $this->getTable()->insert([
 			'id'      => $uid,
 			'user_id' => request()->user()->id,
@@ -326,7 +338,7 @@ abstract class PortAbstract
 			'paymentable_id' => $this->paymentable_id,
 			'paymentable_type' => $this->paymentable_type,
 			'port'    => $this->getPortName(),
-			'price'   => $this->amount / 10,
+			'price'   => $price,
 			'type'    => $this->type,
 			'status'  => Enum::TRANSACTION_INIT,
 			'ip'      => request()->getClientIp(),

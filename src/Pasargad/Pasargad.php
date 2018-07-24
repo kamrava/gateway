@@ -29,6 +29,16 @@ class Pasargad extends PortAbstract implements PortInterface
 	protected $gateUrl = 'https://pep.shaparak.ir/gateway.aspx';
 
 	/**
+     * {@inheritdoc}
+     */
+    public function setCurrencyToToman()
+    {
+        $this->is_toman = true;
+
+        return $this;
+    }
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function set($amount)
