@@ -65,27 +65,37 @@ class Pasargad extends PortAbstract implements PortInterface
         $this->request_id = $request_id;
 
         return $this;
+	}
+
+	/**
+     * {@inheritdoc}
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
     }
 
-		/**
-		 * {@inheritdoc}
-		 */
-		public function setPaymentableId($paymentable_id)
-		{
-				$this->paymentable_id = $paymentable_id;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setPaymentableId($paymentable_id)
+	{
+			$this->paymentable_id = $paymentable_id;
 
-				return $this;
-		}
+			return $this;
+	}
 
-		/**
-		 * {@inheritdoc}
-		 */
-		public function setPaymentableType($paymentable_type)
-		{
-				$this->paymentable_type = $paymentable_type;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setPaymentableType($paymentable_type)
+	{
+			$this->paymentable_type = $paymentable_type;
 
-				return $this;
-		}
+			return $this;
+	}
 
 	/**
 	 * {@inheritdoc}

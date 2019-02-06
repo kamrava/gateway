@@ -71,7 +71,14 @@ abstract class PortAbstract
      *
      * @var string
      */
-    protected $request_id;
+	protected $request_id;
+
+    /**
+     * Payment request_id
+     *
+     * @var integer
+     */
+    protected $user_id;
 
 		/**
      * Payment paymentable_id
@@ -242,14 +249,32 @@ abstract class PortAbstract
     function setRequestId($request_id)
     {
         return $this->set($request_id);
-    }
+	}
 
     /**
-     * get type
+     * Sets user_id
+     * @param $user_id
+     * @return mixed
+     */
+    function setUserId($user_id)
+    {
+        return $this->set($user_id);
+	}
+
+    /**
+     * get request_id
      */
     function getRequestId()
     {
         return $this->request_id;
+	}
+
+    /**
+     * get user_id
+     */
+    function getUserId()
+    {
+        return $this->user_id;
     }
 
 	/**
@@ -306,6 +331,7 @@ abstract class PortAbstract
 		$this->amount = $amount;
 		$this->type = $transaction->type;
 		$this->refId = $transaction->ref_id;
+		$this->user_id = $transaction->user_id;
 		$this->request_id = $transaction->request_id;
 		$this->paymentable_id = $transaction->paymentable_id;
 		$this->paymentable_type = $transaction->paymentable_type;
@@ -330,10 +356,10 @@ abstract class PortAbstract
 	protected function newTransaction()
 	{
 		$uid = $this->getTimeId();
-		$price = $this->is_toman ? $this->amount : $this->amount / 10; 	
+		$price = $this->is_toman ? $this->amount : $this->amount / 10;
 		$this->transactionId = $this->getTable()->insert([
 			'id'      => $uid,
-			'user_id' => request()->user()->id,
+			'user_id' => $this->user_id,
 			'request_id' => $this->request_id,
 			'paymentable_id' => $this->paymentable_id,
 			'paymentable_type' => $this->paymentable_type,

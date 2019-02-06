@@ -31,7 +31,7 @@ class Sadad extends PortAbstract implements PortInterface
 
         return $this;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -58,6 +58,16 @@ class Sadad extends PortAbstract implements PortInterface
     public function setRequestId($request_id)
     {
         $this->request_id = $request_id;
+
+        return $this;
+	}
+
+	/**
+     * {@inheritdoc}
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

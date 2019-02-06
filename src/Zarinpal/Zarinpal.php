@@ -24,7 +24,7 @@ class Zarinpal extends PortAbstract implements PortInterface
 	 * @var string
 	 */
 	protected $iranServer = 'https://ir.zarinpal.com/pg/services/WebGate/wsdl';
-    
+
     /**
 	 * Address of sandbox SOAP server
 	 *
@@ -66,7 +66,7 @@ class Zarinpal extends PortAbstract implements PortInterface
 	 * @var string
 	 */
 	protected $gateUrl = 'https://www.zarinpal.com/pg/StartPay/';
-    
+
     /**
 	 * Address of sandbox gate for redirect
 	 *
@@ -122,6 +122,16 @@ class Zarinpal extends PortAbstract implements PortInterface
     public function setRequestId($request_id)
     {
         $this->request_id = $request_id;
+
+        return $this;
+	}
+
+	/**
+     * {@inheritdoc}
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
@@ -319,7 +329,7 @@ class Zarinpal extends PortAbstract implements PortInterface
 			case 'iran':
 				$this->serverUrl = $this->iranServer;
 				break;
-                
+
 			case 'test':
 				$this->serverUrl = $this->sandboxServer;
 				$this->gateUrl = $this->sandboxGateUrl;

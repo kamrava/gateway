@@ -59,6 +59,16 @@ class Saman extends PortAbstract implements PortInterface
     /**
      * {@inheritdoc}
      */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setPaymentableId($paymentable_id)
     {
         $this->paymentable_id = $paymentable_id;

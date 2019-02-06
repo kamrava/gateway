@@ -34,7 +34,7 @@ class Mellat extends PortAbstract implements PortInterface
      public function type($type)
      {
          $this->type = $type;
- 
+
          return $this;
      }
 
@@ -44,6 +44,16 @@ class Mellat extends PortAbstract implements PortInterface
     public function setRequestId($request_id)
     {
         $this->request_id = $request_id;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
@@ -252,4 +262,3 @@ class Mellat extends PortAbstract implements PortInterface
 		throw new MellatException($response->return);
 	}
 }
-
