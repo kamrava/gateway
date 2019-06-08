@@ -5,6 +5,7 @@ namespace Larabookir\Gateway\Sadad;
 use SoapClient;
 use Larabookir\Gateway\PortAbstract;
 use Larabookir\Gateway\PortInterface;
+use App\Enums\BankGatewayEnum;
 
 class Sadad extends PortAbstract implements PortInterface
 {
@@ -31,7 +32,7 @@ class Sadad extends PortAbstract implements PortInterface
 
         return $this;
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -61,7 +62,7 @@ class Sadad extends PortAbstract implements PortInterface
 
         return $this;
 	}
-
+	
 	/**
      * {@inheritdoc}
      */
@@ -163,11 +164,14 @@ class Sadad extends PortAbstract implements PortInterface
 			$soap = new SoapClient($this->serverUrl);
 
 			$response = $soap->PaymentUtility(
-				$this->config->get('gateway.sadad.merchant'),
+				// $this->config->get('gateway.sadad.merchant'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'merchant'),
 				$this->amount,
 				$this->transactionId(),
-				$this->config->get('gateway.sadad.transactionKey'),
-				$this->config->get('gateway.sadad.terminalId'),
+				// $this->config->get('gateway.sadad.transactionKey'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'transactionKey'),
+				// $this->config->get('gateway.sadad.terminalId'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'terminalId'),
 				$this->getCallback()
 			);
 
@@ -201,9 +205,12 @@ class Sadad extends PortAbstract implements PortInterface
 
 			$result = $soap->CheckRequestStatusResult(
 				$this->transactionId(),
-				$this->config->get('gateway.sadad.merchant'),
-				$this->config->get('gateway.sadad.terminalId'),
-				$this->config->get('gateway.sadad.transactionKey'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'merchant'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'terminalId'),
+				$this->getBankAttr(BankGatewayEnum::SADAD, 'transactionKey'),
+				// $this->config->get('gateway.sadad.merchant'),
+				// $this->config->get('gateway.sadad.terminalId'),
+				// $this->config->get('gateway.sadad.transactionKey'),
 				$this->refId(),
 				$this->amount
 			);

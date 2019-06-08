@@ -8,6 +8,7 @@ use SoapClient;
 use Larabookir\Gateway\PortAbstract;
 use Larabookir\Gateway\PortInterface;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use App\Enums\BankGatewayEnum;
 
 class Pasargad extends PortAbstract implements PortInterface
 {
@@ -66,7 +67,7 @@ class Pasargad extends PortAbstract implements PortInterface
 
         return $this;
 	}
-
+	
 	/**
      * {@inheritdoc}
      */
@@ -113,14 +114,17 @@ class Pasargad extends PortAbstract implements PortInterface
 	public function redirect()
 	{
 
-        $processor = new RSAProcessor($this->config->get('gateway.pasargad.certificate-path'),RSAKeyType::XMLFile);
+        // $processor = new RSAProcessor($this->config->get('gateway.pasargad.certificate-path'),RSAKeyType::XMLFile);
+        $processor = new RSAProcessor($this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path'),RSAKeyType::XMLFile);
 
 		$url = $this->gateUrl;
 		$redirectUrl = $this->getCallback();
         $invoiceNumber = $this->transactionId();
         $amount = $this->amount;
-        $terminalCode = $this->config->get('gateway.pasargad.terminalId');
-        $merchantCode = $this->config->get('gateway.pasargad.merchantId');
+        $terminalCode = $this->getBankAttr(BankGatewayEnum::PASARGAD, 'terminalId');
+        $merchantCode = $this->getBankAttr(BankGatewayEnum::PASARGAD, 'merchantId');
+        // $terminalCode = $this->config->get('gateway.pasargad.terminalId');
+        // $merchantCode = $this->config->get('gateway.pasargad.merchantId');
         $timeStamp = date("Y/m/d H:i:s");
         $invoiceDate = date("Y/m/d H:i:s");
         $action = 1003;
@@ -185,14 +189,16 @@ class Pasargad extends PortAbstract implements PortInterface
 	 */
 	protected function verifyPayment()
 	{
-        $processor = new RSAProcessor($this->config->get('gateway.pasargad.certificate-path'),RSAKeyType::XMLFile);
+        $processor = new RSAProcessor($this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path'),RSAKeyType::XMLFile);
         $fields = array('invoiceUID' => Input::get('tref'));
         $result = Parser::post2https($fields,'https://pep.shaparak.ir/CheckTransactionResult.aspx');
         $check_array = Parser::makeXMLTree($result);
         if ($check_array['result'] == "True") {
             $fields = array(
-                'MerchantCode' => $this->config->get('gateway.pasargad.merchantId'),
-                'TerminalCode' => $this->config->get('gateway.pasargad.terminalId'),
+                'MerchantCode' => $this->getBankAttr(BankGatewayEnum::PASARGAD, 'merchantId'),
+                'TerminalCode' => $this->getBankAttr(BankGatewayEnum::PASARGAD, 'terminalId'),
+                // 'MerchantCode' => $this->config->get('gateway.pasargad.merchantId'),
+                // 'TerminalCode' => $this->config->get('gateway.pasargad.terminalId'),
                 'InvoiceNumber' => $check_array['invoiceNumber'],
                 'InvoiceDate' => Input::get('iD'),
                 'amount' => $check_array['amount'],

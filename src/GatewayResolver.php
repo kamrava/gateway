@@ -15,6 +15,7 @@ use Larabookir\Gateway\Exceptions\PortNotFoundException;
 use Larabookir\Gateway\Exceptions\InvalidRequestException;
 use Larabookir\Gateway\Exceptions\NotFoundTransactionException;
 use Illuminate\Support\Facades\DB;
+use App\BankGateway;
 
 class GatewayResolver
 {
@@ -25,6 +26,7 @@ class GatewayResolver
 	 * @var Config
 	 */
 	public $config;
+	public $new_config;
 
 	/**
 	 * Keep current port driver
@@ -41,12 +43,25 @@ class GatewayResolver
 	public function __construct($config = null, $port = null)
 	{
 		$this->config = app('config');
+		$this->new_config = $this->getNewConfig();
 		$this->request = app('request');
 
 		if ($this->config->has('gateway.timezone'))
 			date_default_timezone_set($this->config->get('gateway.timezone'));
 
 		if (!is_null($port)) $this->make($port);
+	}
+
+	public function getNewConfig()
+	{
+		$query = BankGateway::query();
+		if($envoy = isEnvoyerUser())
+		{
+			$query->where('envoy_id', $envoy->id);
+		} else {
+			$query->whereNull('envoy_id');
+		}
+		return $query->get();
 	}
 
 	/**
@@ -150,6 +165,7 @@ class GatewayResolver
 
 		$this->port = $port;
 		$this->port->setConfig($this->config); // injects config
+		$this->port->setNewConfig($this->new_config); // injects config
 		$this->port->setPortName($name); // injects config
 		$this->port->boot();
 

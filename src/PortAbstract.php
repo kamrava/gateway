@@ -30,6 +30,10 @@ abstract class PortAbstract
 	 * @var Config
 	 */
 	protected $config;
+	/**
+	 * @var NewConfig
+	 */
+	protected $new_config;
 
 	/**
 	 * Port id
@@ -128,6 +132,11 @@ abstract class PortAbstract
 	function setConfig($config)
 	{
 		$this->config = $config;
+	}
+
+	function setNewConfig($config)
+	{
+		$this->new_config = $config;
 	}
 
 	/**
@@ -311,6 +320,11 @@ abstract class PortAbstract
     function getPaymentableType()
     {
         return $this->paymentable_type;
+	}
+	
+	public function getBankAttr($bank_name, $attr)
+    {
+        return $this->new_config->where('name', $bank_name)->first()->jsonData($attr);
     }
 
 	/**

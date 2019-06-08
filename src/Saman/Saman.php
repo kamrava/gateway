@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use SoapClient;
 use Larabookir\Gateway\PortAbstract;
 use Larabookir\Gateway\PortInterface;
+use App\Enums\BankGatewayEnum;
 
 class Saman extends PortAbstract implements PortInterface
 {
@@ -104,7 +105,8 @@ class Saman extends PortAbstract implements PortInterface
 
         return view('gateway::saman-redirector')->with([
             'amount' => $this->amount,
-            'merchant' => $this->config->get('gateway.saman.merchant'),
+            // 'merchant' => $this->config->get('gateway.saman.merchant'),
+            'merchant' => $this->getBankAttr(BankGatewayEnum::SAMAN, 'merchant'),
             'resNum' => $this->transactionId(),
             'callBackUrl' => $this->getCallback()
         ]);
@@ -183,9 +185,9 @@ class Saman extends PortAbstract implements PortInterface
     protected function verifyPayment()
     {
         $fields = array(
-            "merchantID" => $this->config->get('gateway.saman.merchant'),
+            "merchantID" => $this->getBankAttr(BankGatewayEnum::SAMAN, 'merchant'),
             "RefNum" => $this->refId,
-            "password" => $this->config->get('gateway.saman.password'),
+            "password" => $this->getBankAttr(BankGatewayEnum::SAMAN, 'password'),
         );
 
 
