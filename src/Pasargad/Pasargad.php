@@ -67,7 +67,7 @@ class Pasargad extends PortAbstract implements PortInterface
 
         return $this;
 	}
-	
+
 	/**
      * {@inheritdoc}
      */
@@ -115,7 +115,7 @@ class Pasargad extends PortAbstract implements PortInterface
 	{
 
         // $processor = new RSAProcessor($this->config->get('gateway.pasargad.certificate-path'),RSAKeyType::XMLFile);
-        $processor = new RSAProcessor($this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path'),RSAKeyType::XMLFile);
+        $processor = new RSAProcessor(storage_path('app/gateway/pasargad/'.$this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path')),RSAKeyType::XMLFile);
 
 		$url = $this->gateUrl;
 		$redirectUrl = $this->getCallback();
@@ -189,7 +189,7 @@ class Pasargad extends PortAbstract implements PortInterface
 	 */
 	protected function verifyPayment()
 	{
-        $processor = new RSAProcessor($this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path'),RSAKeyType::XMLFile);
+        $processor = new RSAProcessor(storage_path('app/gateway/pasargad/'.$this->getBankAttr(BankGatewayEnum::PASARGAD, 'certificate-path')),RSAKeyType::XMLFile);
         $fields = array('invoiceUID' => Input::get('tref'));
         $result = Parser::post2https($fields,'https://pep.shaparak.ir/CheckTransactionResult.aspx');
         $check_array = Parser::makeXMLTree($result);
